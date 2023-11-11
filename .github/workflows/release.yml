@@ -119,7 +119,9 @@ jobs:
       - name: build windows binaries
         shell: bash
         run: |
-          export WINEPATH="/usr/x86_64-w64-mingw32/lib;/usr/lib/gcc/i686-w64-mingw32/10-win32/"
+          if [ "${{ matrix.arch }}" == "win32" ]; then
+            export WINEPATH="/usr/x86_64-w64-mingw32/lib;/usr/lib/gcc/i686-w64-mingw32/10-win32/"
+          fi
           ./dist-build/msys2-${{ matrix.arch }}.sh
       - name: upload built binaries
         uses: actions/upload-artifact@v3
