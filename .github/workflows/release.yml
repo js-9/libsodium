@@ -97,10 +97,10 @@ jobs:
     steps:
       - name: install 32bit complier
         shell: bash
-        if: ${{ matrix.arch }} == win32
+        if: matrix.arch == 'win32'
         run: |
           sudo apt-get update
-          sudo apt-get install gcc-mingw-w64-i686 mingw-w64-i686-dev gcc-mingw-w64-i686-win32-runtime wine wine32
+          sudo apt-get install gcc-mingw-w64-i686 mingw-w64-i686-dev gcc-mingw-w64-i686-win32-runtime wine
       - name: checkout code
         uses: actions/checkout@v3
         with:
@@ -112,6 +112,7 @@ jobs:
       - name: build windows binaries
         shell: bash
         run: |
+          export WINEARCH=win32
           ./dist-build/msys2-${{ matrix.arch }}.sh
       - name: upload built binaries
         uses: actions/upload-artifact@v3
