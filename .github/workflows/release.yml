@@ -15,6 +15,10 @@ jobs:
           - armv8-a
     runs-on: ubuntu-latest
     steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
       - name: Build binaries
         shell: bash
         run: |
@@ -36,6 +40,10 @@ jobs:
           - armv8-a+crypto+aes
     runs-on: ubuntu-latest
     steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
       - name: Run configure
         shell: bash
         run: |
@@ -61,6 +69,10 @@ jobs:
           - win64
     runs-on: windows-latest
     steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
       - name: Build windows binaries
         shell: bash
         run: |
@@ -74,6 +86,10 @@ jobs:
     name: Build binaries for apple
     runs-on: macos-latest
     steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
       - name: Build binaries
         shell: bash
         run: |
