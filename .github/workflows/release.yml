@@ -113,6 +113,7 @@ jobs:
         shell: bash
         run: |
           export WINEARCH=win32
+          export WINEPREFIX=$HOME/.wine32
           ./dist-build/msys2-${{ matrix.arch }}.sh
       - name: upload built binaries
         uses: actions/upload-artifact@v3
