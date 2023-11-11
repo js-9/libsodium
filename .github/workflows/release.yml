@@ -63,7 +63,7 @@ jobs:
                TARGET_TRIPLET="x86_64-unknown-linux-gnu"
                ;;
             "armv7-a")
-               TARGET_TRIPLET="armv7a-none-eabi"
+               TARGET_TRIPLET="armv7-unknown-linux-gnueabi"
                ;;
             "aarch64")
                TARGET_TRIPLET="aarch64-unknown-linux-gnu"
