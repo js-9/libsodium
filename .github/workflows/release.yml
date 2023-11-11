@@ -95,7 +95,7 @@ jobs:
           - win64
     runs-on: ubuntu-latest
     steps:
-      - name: install 32bit build tools
+      - name: install build tools
         shell: bash
         run: |
           sudo dpkg --add-architecture i386
@@ -123,6 +123,11 @@ jobs:
         with:
           name: windows-${{ matrix.arch }}
           path: libsodium-${{ matrix.arch }}
+      - name: upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results-${{ matrix.arch }}
+          path: test/default/test-suite.log
   build-apple:
     name: build binaries for apple
     runs-on: macos-latest
