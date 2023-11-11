@@ -38,10 +38,10 @@ jobs:
       fail-fast: false
       matrix:
         arch:
-          - x86
+          - i686
           - x86_64
           - armv7-a
-          - armv8-a+crypto+aes
+          - aarch64
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -55,7 +55,10 @@ jobs:
       - name: run configure
         shell: bash
         run: |
-          env CFLAGS="$CFLAGS -Os -march=${{ matrix.arch }}" ./configure --prefix=$(pwd)/libsodium-${{ matrix.arch }}
+          if [ "${{ matrix.arch }}" = "armv7-a ]; then
+            export CFLAGS="${CFLAGS} -Os -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb -marm"
+          fi
+          ./configure --prefix=$(pwd)/libsodium-${{ matrix.arch }} --host=${{ matrix.arch }}-linux-gnu
       - name: build binaries
         shell: bash
         run: |
@@ -75,7 +78,7 @@ jobs:
         arch:
           - win32
           - win64
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
     steps:
       - name: install 32bit complier
         shell: bash
