@@ -55,7 +55,7 @@ jobs:
       - name: run configure
         shell: bash
         run: |
-          if [ "${{ matrix.arch }}" = "armv7-a ]; then
+          if [ "${{ matrix.arch }}" = "armv7-a" ]; then
             export CFLAGS="${CFLAGS} -Os -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb -marm"
           fi
           ./configure --prefix=$(pwd)/libsodium-${{ matrix.arch }} --host=${{ matrix.arch }}-linux-gnu
