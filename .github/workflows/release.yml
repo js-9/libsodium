@@ -140,7 +140,7 @@ jobs:
         shell: bash
         if: always()
         run: |
-          find /proc/sys/fs/binfmt_misc/ |grep -v -E '(register|status)' |while read f; do
+          ls -1 /proc/sys/fs/binfmt_misc/* |grep -v -E '(register|status)' |while read f; do
             echo "binfmt file: $f"
             cat "$f"
             echo
