@@ -55,10 +55,25 @@ jobs:
       - name: run configure
         shell: bash
         run: |
-          if [ "${{ matrix.arch }}" = "armv7-a" ]; then
-            export CFLAGS="${CFLAGS} -Os -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb -marm"
-          fi
-          ./configure --prefix=$(pwd)/libsodium-${{ matrix.arch }} --host=${{ matrix.arch }}-linux-gnu
+          case "${{ matrix.arch }}" in
+            "i686")
+               TARGET_TRIPLET="i686-unknown-linux-gnu"
+               ;;
+            "x86_64")
+               TARGET_TRIPLET="x86_64-unknown-linux-gnu"
+               ;;
+            "armv7-a")
+               TARGET_TRIPLET="armv7a-none-eabi"
+               ;;
+            "aarch64")
+               TARGET_TRIPLET="aarch64-unknown-linux-gnu"
+               ;;
+            *)
+               echo "target triplet can not be determined"
+               exit 1
+               ;;
+          esac
+          ./configure --prefix=$(pwd)/libsodium-${{ matrix.arch }} --host=${TARGET_TRIPLET}
       - name: build binaries
         shell: bash
         run: |
