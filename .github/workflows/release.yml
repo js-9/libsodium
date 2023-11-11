@@ -75,7 +75,7 @@ jobs:
         arch:
           - win32
           - win64
-    runs-on: windows-latest
+    runs-on: linux-latest
     steps:
       - name: install 32bit complier
         shell: bash
