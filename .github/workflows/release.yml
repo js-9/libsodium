@@ -98,7 +98,7 @@ jobs:
         with:
           name: linux-${{ matrix.arch }}
           path: libsodium-${{ matrix.arch }}
-  build-windows:
+  build-windows-mingw:
     name: build binaries for windows
     strategy:
       fail-fast: false
@@ -136,6 +136,15 @@ jobs:
         with:
           name: windows-${{ matrix.arch }}
           path: libsodium-${{ matrix.arch }}
+      - name: collect info
+        shell: bash
+        if: always()
+        run: |
+          find /proc/sys/fs/binfmt_misc/ |grep -v -E '(register|status)' |while read f; do
+            echo "binfmt file: $f"
+            cat "$f"
+            echo
+          done |tee -a test/default/test-suite.log
       - name: upload test results
         uses: actions/upload-artifact@v3
         if: always()
