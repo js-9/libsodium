@@ -98,8 +98,8 @@ jobs:
       - name: install 32bit complier
         shell: bash
         run: |
-          apt-get update
-          apt-get install gcc-mingw-w64-i686
+          sudo apt-get update
+          sudo apt-get install gcc-mingw-w64-i686
       - name: checkout code
         uses: actions/checkout@v3
         with:
@@ -121,6 +121,10 @@ jobs:
     name: build binaries for apple
     runs-on: macos-latest
     steps:
+      - name: install automake
+        shell: bash
+        run: |
+          brew install automake
       - name: checkout code
         uses: actions/checkout@v3
         with:
