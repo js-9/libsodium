@@ -111,6 +111,7 @@ jobs:
       - name: install build tools
         shell: bash
         run: |
+          update-binfmts --disable cli #disable mono binfmt because it confuses mono 'executables' with real ones
           sudo dpkg --add-architecture i386
           sudo apt-get update
           sudo apt-get install gcc-mingw-w64 gcc-mingw-w64-i686 build-essential mingw-w64-i686-dev gcc-mingw-w64-i686-win32-runtime wine32 autoconf libtool wine wine64 wine-binfmt
