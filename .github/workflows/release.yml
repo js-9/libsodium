@@ -112,8 +112,7 @@ jobs:
       - name: build windows binaries
         shell: bash
         run: |
-          export WINEARCH=win32
-          export WINEPREFIX=$HOME/.wine32
+          export WINEPATH="/usr/x86_64-w64-mingw32/lib;/usr/lib/gcc/i686-w64-mingw32/10-win32/"
           ./dist-build/msys2-${{ matrix.arch }}.sh
       - name: upload built binaries
         uses: actions/upload-artifact@v3
