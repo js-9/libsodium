@@ -1,0 +1,85 @@
+name: Build binaries for release
+on:
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    name: Build binaries for android
+    strategy:
+      fail-fast: false
+      matrix:
+        arch:
+          - x86_64
+          - x86
+          - armv7-a
+          - armv8-a
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build binaries
+        shell: bash
+        run: |
+          ./dist-build/android-${{ matrix.arch }}.sh
+      - name: Upload built binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-${{ matrix.arch }}
+          path: libsodium-android-${{ matrix.arch }}*
+  build-linux:
+    name: Build binaries for linux
+    strategy:
+      fail-fast: false
+      matrix:
+        arch:
+          - x86
+          - x86_64
+          - armv7-a
+          - armv8-a+crypto+aes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run configure
+        shell: bash
+        run: |
+          env CFLAGS="-Os -march=${{ matrix.arch }}" ./configure --prefix=$(pwd)/libsodium-${{ matrix.arch }}
+      - name: Build binaries
+        shell: bash
+        run: |
+          NPROCESSORS=$(getconf NPROCESSORS_ONLN 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null)
+          make clean && \
+            make -j${PROCESSORS} install
+      - name: Upload built binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-${{ matrix.arch }}
+          path: libsodium-${{ matrix.arch }}
+  build-windows:
+    name: Build binaries for windows
+    strategy:
+      fail-fast: false
+      matrix:
+        arch:
+          - win32
+          - win64
+    runs-on: windows-latest
+    steps:
+      - name: Build windows binaries
+        shell: bash
+        run: |
+          ./dist-build/msys2-${{ matrix.arch }}.sh
+      - name: Upload built binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-${{ matrix.arch }}
+          path: libsodium-${{ matrix.arch }}
+  build-apple:
+    name: Build binaries for apple
+    runs-on: macos-latest
+    steps:
+      - name: Build binaries
+        shell: bash
+        run: |
+          ./dist-build/apple-xcframework.sh
+      - name: Upload built binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: apple
+          path: libsodium-apple
