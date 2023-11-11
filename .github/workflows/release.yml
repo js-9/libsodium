@@ -95,13 +95,13 @@ jobs:
           - win64
     runs-on: ubuntu-latest
     steps:
-      - name: install compiler
+      - name: install build tools
         shell: bash
         if: matrix.arch == 'win64'
         run: |
           sudo apt-get update
-          sudo apt-get install gcc-mingw-w64 build-essential
-      - name: install 32bit complier
+          sudo apt-get install gcc-mingw-w64 build-essential wine
+      - name: install 32bit build tools
         shell: bash
         if: matrix.arch == 'win32'
         run: |
