@@ -152,7 +152,7 @@ jobs:
       - name: run autogen
         shell: bash
         run: |
-          ./autogen.sh -s
+          ./autogen.sh -s -f
       - name: build binaries
         shell: bash
         run: |
