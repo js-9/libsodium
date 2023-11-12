@@ -71,6 +71,8 @@ ECHO Configuration=StaticRelease
 msbuild /m /v:n /p:Configuration=StaticRelease /p:Platform=Win32 %solution% >> %log%
 IF errorlevel 1 GOTO error
 
+ECHO %PATH%
+SET "PATH="
 CALL !environment! x86_amd64 > nul
 ECHO Platform=x64
 
@@ -95,14 +97,10 @@ IF errorlevel 1 GOTO error
 
 @REM Build ARM64 packages only for Visual studio 19 and later
 IF %version% == 16 GOTO buildarm
-ECHO a
 IF %version% == 17 GOTO buildarm
-ECHO b
 GOTO complete
-ECHO c
 
 :buildarm
-ECHO d
 CALL !environment! x86_arm64 > nul
 ECHO Platform=ARM64
 
