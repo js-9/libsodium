@@ -43,7 +43,7 @@ jobs:
       - name: upload built binaries
         uses: actions/upload-artifact@v3
         with:
-          name: android-${{ matrix.arch }}
+          name: libsodium-android-${{ matrix.arch }}
           path: libsodium-android-${{ steps.set-result-path-part.outputs.result_path_part }}*
   build-linux:
     name: build binaries for linux
@@ -96,10 +96,10 @@ jobs:
       - name: upload built binaries
         uses: actions/upload-artifact@v3
         with:
-          name: linux-${{ matrix.arch }}
+          name: libsodium-linux-${{ matrix.arch }}
           path: libsodium-${{ matrix.arch }}
   build-windows-mingw:
-    name: build binaries for windows
+    name: build binaries for windows (mingw)
     strategy:
       fail-fast: false
       matrix:
@@ -135,19 +135,8 @@ jobs:
       - name: upload built binaries
         uses: actions/upload-artifact@v3
         with:
-          name: windows-${{ matrix.arch }}
+          name: libsodium-windows-mingw-${{ matrix.arch }}
           path: libsodium-${{ matrix.arch }}
-      - name: collect info
-        shell: bash
-        if: always()
-        run: |
-          update-binfmts --display |tee -a test/default/test-suite.log
-      - name: upload test results
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: test-results-${{ matrix.arch }}
-          path: test/default/test-suite.log
   build-apple:
     name: build binaries for apple
     runs-on: macos-latest
@@ -171,5 +160,22 @@ jobs:
       - name: upload built binaries
         uses: actions/upload-artifact@v3
         with:
-          name: apple
+          name: libsodium-apple-all
           path: libsodium-apple
+  build-windows-msvc:
+    name: build binaries for windows (msvc)
+    runs-on: windows-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: build binaries
+        shell: bash
+        run: |
+          cmd.exe /c builds/msvc/build/buildbase.bat builds/msvc/vs2022/libsodium.sln 17
+      - name: upload built binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: libsodium-apple-all
+          path: .
