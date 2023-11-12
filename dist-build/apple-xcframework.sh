@@ -404,16 +404,6 @@ for ext in a dylib; do
     -output "$PREFIX/tvos/lib/libsodium.${ext}"
 done
 
-echo "Bundling visionOS targets..."
-
-mkdir -p "${PREFIX}/visionos/lib"
-cp -a "${VISIONOS_PREFIX}/include" "${PREFIX}/visionos/"
-for ext in a dylib; do
-  lipo -create \
-    "$VISIONOS_PREFIX/lib/libsodium.${ext}" \
-    -output "$PREFIX/visionos/lib/libsodium.${ext}"
-done
-
 echo "Bundling Catalyst targets..."
 
 mkdir -p "${PREFIX}/catalyst/lib"
@@ -490,17 +480,6 @@ if [ -z "$LIBSODIUM_SKIP_SIMULATORS" ]; then
     fi
   done
 
-  echo "Bundling visionOS simulators..."
-
-  mkdir -p "${PREFIX}/visionos-simulators/lib"
-  cp -a "${VISIONOS_SIMULATOR_PREFIX}/include" "${PREFIX}/visionos-simulators/"
-  for ext in a dylib; do
-    if [ "$APPLE_SILICON_SUPPORTED" = "true" ]; then
-      lipo -create \
-        "${VISIONOS_SIMULATOR_PREFIX}/lib/libsodium.${ext}" \
-        -output "${PREFIX}/visionos-simulators/lib/libsodium.${ext}" || exit 1
-    fi
-  done
 fi
 
 echo "Creating Clibsodium.xcframework..."
