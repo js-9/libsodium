@@ -71,8 +71,6 @@ ECHO Configuration=StaticRelease
 msbuild /m /v:n /p:Configuration=StaticRelease /p:Platform=Win32 %solution% >> %log%
 IF errorlevel 1 GOTO error
 
-ECHO %PATH%
-SET "PATH="
 CALL !environment! x86_amd64 > nul
 ECHO Platform=x64
 
@@ -101,6 +99,8 @@ IF %version% == 17 GOTO buildarm
 GOTO complete
 
 :buildarm
+@REM vcvarsall batch expands PATH and after the third call it becomes too long, so reset it
+SET "PATH="
 CALL !environment! x86_arm64 > nul
 ECHO Platform=ARM64
 
