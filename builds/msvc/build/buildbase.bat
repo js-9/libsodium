@@ -99,29 +99,27 @@ IF %version% == 17 GOTO buildarm
 GOTO complete
 
 :buildarm
-IF defined BUILDARM (
-  CALL !environment! x86_arm64 > nul
-  ECHO Platform=ARM64
+CALL !environment! x86_arm64 > nul
+ECHO Platform=ARM64
 
-  ECHO Configuration=DynDebug
-  msbuild /m /v:n /p:Configuration=DynDebug /p:Platform=ARM64 %solution% >> %log%
-  IF errorlevel 1 GOTO error
-  ECHO Configuration=DynRelease
-  msbuild /m /v:n /p:Configuration=DynRelease /p:Platform=ARM64 %solution% >> %log%
-  IF errorlevel 1 GOTO error
-  ECHO Configuration=LtcgDebug
-  msbuild /m /v:n /p:Configuration=LtcgDebug /p:Platform=ARM64 %solution% >> %log%
-  IF errorlevel 1 GOTO error
-  ECHO Configuration=LtcgRelease
-  msbuild /m /v:n /p:Configuration=LtcgRelease /p:Platform=ARM64 %solution% >> %log%
-  IF errorlevel 1 GOTO error
-  ECHO Configuration=StaticDebug
-  msbuild /m /v:n /p:Configuration=StaticDebug /p:Platform=ARM64 %solution% >> %log%
-  IF errorlevel 1 GOTO error
-  ECHO Configuration=StaticRelease
-  msbuild /m /v:n /p:Configuration=StaticRelease /p:Platform=ARM64 %solution% >> %log%
-  IF errorlevel 1 GOTO error
-)
+ECHO Configuration=DynDebug
+msbuild /m /v:n /p:Configuration=DynDebug /p:Platform=ARM64 %solution% >> %log%
+IF errorlevel 1 GOTO error
+ECHO Configuration=DynRelease
+msbuild /m /v:n /p:Configuration=DynRelease /p:Platform=ARM64 %solution% >> %log%
+IF errorlevel 1 GOTO error
+ECHO Configuration=LtcgDebug
+msbuild /m /v:n /p:Configuration=LtcgDebug /p:Platform=ARM64 %solution% >> %log%
+IF errorlevel 1 GOTO error
+ECHO Configuration=LtcgRelease
+msbuild /m /v:n /p:Configuration=LtcgRelease /p:Platform=ARM64 %solution% >> %log%
+IF errorlevel 1 GOTO error
+ECHO Configuration=StaticDebug
+msbuild /m /v:n /p:Configuration=StaticDebug /p:Platform=ARM64 %solution% >> %log%
+IF errorlevel 1 GOTO error
+ECHO Configuration=StaticRelease
+msbuild /m /v:n /p:Configuration=StaticRelease /p:Platform=ARM64 %solution% >> %log%
+IF errorlevel 1 GOTO error
 
 :complete
 ECHO Complete: %solution%
