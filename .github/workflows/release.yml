@@ -171,10 +171,9 @@ jobs:
         with:
           fetch-depth: 1
       - name: build binaries
-        shell: bash
+        shell: cmd
         run: |
-          echo :WindowsBatch:E::bat::/init: > /proc/sys/fs/binfmt_misc/register
-          ./builds/msvc/build/buildbase.bat builds/msvc/vs2022/libsodium.sln 17
+          CALL builds\msvc\build\buildbase.bat builds\msvc\vs2022\libsodium.sln 17
       - name: upload built binaries
         uses: actions/upload-artifact@v3
         with:
