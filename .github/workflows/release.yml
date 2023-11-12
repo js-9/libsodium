@@ -1,4 +1,4 @@
-name: Build binaries for release
+name: build all binaries
 on:
   workflow_dispatch:
 
@@ -173,9 +173,10 @@ jobs:
       - name: build binaries
         shell: bash
         run: |
-          cmd.exe /c builds/msvc/build/buildbase.bat builds/msvc/vs2022/libsodium.sln 17
+          sudo sh -c "echo :WindowsBatch:E::bat::/init: > /proc/sys/fs/binfmt_misc/register"
+          ./builds/msvc/build/buildbase.bat builds/msvc/vs2022/libsodium.sln 17
       - name: upload built binaries
         uses: actions/upload-artifact@v3
         with:
-          name: libsodium-apple-all
+          name: libsodium-windows-msvc-all
           path: .
