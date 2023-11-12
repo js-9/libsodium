@@ -343,8 +343,6 @@ if [ -z "$LIBSODIUM_SKIP_SIMULATORS" ]; then
   build_watchos_simulator >"$LOG_FILE" 2>&1 || exit 1
   echo "Building for the tvOS simulator..."
   build_tvos_simulator >"$LOG_FILE" 2>&1 || exit 1
-  echo "Building for the visionOS simulator..."
-  build_visionos_simulator >"$LOG_FILE" 2>&1 || exit 1
 else
   echo "[Skipping the simulators]"
 fi
