@@ -159,6 +159,7 @@ jobs:
           ./dist-build/apple-xcframework.sh
       - name: upload built binaries
         uses: actions/upload-artifact@v3
+        if: always()
         with:
           name: libsodium-apple-all
           path: libsodium-apple
