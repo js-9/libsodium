@@ -178,4 +178,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: libsodium-windows-msvc-all
-          path: .
+          path: bin
