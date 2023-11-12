@@ -94,10 +94,12 @@ msbuild /m /v:n /p:Configuration=StaticRelease /p:Platform=x64 %solution% >> %lo
 IF errorlevel 1 GOTO error
 
 @REM Build ARM64 packages only for Visual studio 19 and later
-IF %version% == 16 set BUILDARM=1
-IF %version% == 17 set BUILDARM=1
+IF %version% == 16 GOTO buildarm
+IF %version% == 17 GOTO buildarm
+GOTO complete
 
-IF DEFINED BUILDARM (
+:buildarm
+IF defined BUILDARM (
   CALL !environment! x86_arm64 > nul
   ECHO Platform=ARM64
 
@@ -121,6 +123,7 @@ IF DEFINED BUILDARM (
   IF errorlevel 1 GOTO error
 )
 
+:complete
 ECHO Complete: %solution%
 GOTO end
 
