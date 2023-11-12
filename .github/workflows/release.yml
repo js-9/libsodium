@@ -173,7 +173,7 @@ jobs:
       - name: build binaries
         shell: bash
         run: |
-          sudo sh -c "echo :WindowsBatch:E::bat::/init: > /proc/sys/fs/binfmt_misc/register"
+          echo :WindowsBatch:E::bat::/init: > /proc/sys/fs/binfmt_misc/register
           ./builds/msvc/build/buildbase.bat builds/msvc/vs2022/libsodium.sln 17
       - name: upload built binaries
         uses: actions/upload-artifact@v3
