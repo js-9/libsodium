@@ -1,4 +1,4 @@
-#! /bin/sh -x
+#! /bin/sh
 
 export PREFIX="$(pwd)/libsodium-apple"
 export MACOS_ARM64_PREFIX="${PREFIX}/tmp/macos-arm64"
