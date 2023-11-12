@@ -333,8 +333,6 @@ echo "Building for watchOS..."
 build_watchos >"$LOG_FILE" 2>&1 || exit 1
 echo "Building for tvOS..."
 build_tvos >"$LOG_FILE" 2>&1 || exit 1
-echo "Building for visionOS..."
-build_visionos >"$LOG_FILE" 2>&1 || exit 1
 echo "Building for Catalyst..."
 build_catalyst >"$LOG_FILE" 2>&1 || exit 1
 
